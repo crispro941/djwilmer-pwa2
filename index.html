@@ -1,0 +1,288 @@
+<style>
+div[style*="z-index: 9999"],
+div[style*="position: fixed"][style*="bottom: 0px"] {
+    display: none !important;<h1>
+    visibility: hidden !important;
+}
+</style>
+
+<script>
+function removeTiinyHostAd() {
+    let ad = document.querySelector('div[style*="z-index: 9999"][style*="position: fixed"]');
+    if (ad) {
+        ad.remove();
+    }
+}
+
+// Ejecuta la función cada 500ms para asegurarse de que se elimine incluso si se carga después
+setInterval(removeTiinyHostAd, 500);
+
+</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ WILMER</title>
+    <link rel="manifest" href="manifest.json">
+
+<link rel="manifest" href="manifest.json">
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(() => console.log("✅ Service Worker registrado"))
+            .catch(error => console.log("❌ Error en el registro del Service Worker:", error));
+    }
+</script>
+
+    <link rel="icon" type="image/png" href="icon.png">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #001a66, #0033cc);
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        .share-button {
+            font-size: 22px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .share-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        /* Logo */
+        .logo-container {
+            margin: 20px 0;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .logo-container img {
+            width: 90%;
+            border-radius: 50%;
+        }
+
+        /* Estado en vivo */
+        .live-status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .live-badge {
+            background: red;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* Info de la canción */
+        .song-info {
+            margin-top: 15px;
+        }
+
+        .song-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .song-artist {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        /* Controles de reproducción */
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .control-button {
+            background: white;
+            color: #0033cc;
+            border: none;
+            border-radius: 50%;
+            padding: 18px;
+            font-size: 22px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .control-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Redes sociales */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            transition: transform 0.2s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado -->
+    <div class="header">
+        <span>DJ WILMER</span>
+        <span class="share-button" onclick="shareRadio()">📤</span>
+    </div>
+
+    <!-- Logo de la radio -->
+    <div class="logo-container">
+        <img src="icon.png" alt="Logo de DJ WILMER">
+    </div>
+
+    <!-- Estado en vivo -->
+    <div class="live-status">
+        <span>REPRODUCIENDO</span>
+        <span class="live-badge">EN VIVO</span>
+    </div>
+
+    <!-- Información de la canción -->
+    <div class="song-info">
+        <p class="song-title">DJ WILMER</p>
+        <p class="song-artist">En Vivo</p>
+    </div>
+<button id="installBtn" style="display:none; padding: 10px 20px; background: #ffcc00; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+    📲 Instalar DJ WILMER
+</button>
+
+<script>
+    let deferredPrompt;
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredPrompt = event;
+        document.getElementById("installBtn").style.display = "block";
+    });
+
+    document.getElementById("installBtn").addEventListener("click", () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === "accepted") {
+                    console.log("✅ Usuario aceptó la instalación");
+                } else {
+                    console.log("❌ Usuario canceló la instalación");
+                }
+                deferredPrompt = null;
+            });
+        }
+    });
+</script>
+
+    <!-- Controles de reproducción -->
+    <div class="player-controls">
+        <button id="playPauseButton" class="control-button">⏸️</button>
+    </div>
+
+    <!-- Redes sociales -->
+        <div class="social-icons">
+        <a href="https://web.facebook.com/DJCHOCHOBARWILMER"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" width="25"></a>
+        <a href="https://www.instagram.com/wilmerdelgadocieza/"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="25"></a>
+        <a href="https://api.whatsapp.com/send/?phone=51984335569&text&type=phone_number&app_absent=0"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25"></a>
+        <a href="https://es.pinterest.com/wdelgadocieza/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Pinterest.svg/640px-Pinterest.svg.png" width="25"></a>
+        <a href="https://www.youtube.com/DJCHOCHOBARWILMER"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/640px-YouTube_full-color_icon_%282017%29.svg.png" width="25"></a>
+
+    <!-- Audio -->
+    <audio id="audioPlayer" src="https://stream.zeno.fm/wttrxavefwzuv"></audio>
+
+    <script>
+        function shareRadio() {
+            if (navigator.share) {
+                navigator.share({
+                    title: "Escucha DJ WILMER 🎶",
+                    text: "Sintoniza: DJ WILMER ahora en vivo 📻🔥",
+                    url: window.location.href
+                }).catch(error => console.log("❌ Error al compartir:", error));
+            } else {
+                alert("Tu navegador no soporta la opción de compartir.");
+            }
+        }
+
+        const button = document.getElementById("playPauseButton");
+        const audio = document.getElementById("audioPlayer");
+        let isPlaying = false;
+
+        button.addEventListener("click", function() {
+            if (isPlaying) {
+                audio.pause();
+                button.textContent = "▶️";
+            } else {
+                audio.play();
+                button.textContent = "⏸️";
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
+
+</body>
+</html>
