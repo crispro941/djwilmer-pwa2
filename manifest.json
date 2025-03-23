@@ -1,17 +1,17 @@
 {
-  "id": "djwilmer-pwa2.tiiny.site",
+  "id": "djwilmer-pwa2.vercel.app",
   "name": "DJ WILMER",
   "short_name": "DJ WILMER",
   "description": "DJ WILMER",
   "icons": [
     {
-      "src": "https://djwilmer-pwa.tiiny.site/icon.png",
+      "src": "https://djwilmer-pwa2.vercel.app/icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://djwilmer-pwa.tiiny.site/icon.png",
+      "src": "https://djwilmer-pwa2.vercel.app/icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
@@ -19,7 +19,7 @@
   ],
   "screenshots": [
     {
-      "src": "https://djwilmer-pwa.tiiny.site/screenshot-mobile.png",
+      "src": "https://djwilmer-pwa2.vercel.app/icon.png",
       "sizes": "1920x1080",
       "type": "image/png",
       "label": "Pantalla Inicial DJ WILMER"
@@ -42,7 +42,16 @@
       "description": "DJ WILMER",
       "icons": [
         {
-          "src": "https://djwilmer-pwa.tiiny.site/icon.png",
+          "src": "https://djwilmer-pwa2.vercel.app/icon.png",
+          "sizes": "192x192"
+        },
+        {
+      "name": "Rep 2",
+      "url": "/1/",
+      "description": "DJ WILMER",
+      "icons": [
+        {
+          "src": "https://djwilmer-pwa2.vercel.app/icon.png",
           "sizes": "192x192"
         }
       ]
