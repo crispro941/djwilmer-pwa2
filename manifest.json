@@ -36,15 +36,18 @@
   ],
   "scope": "/",
   "shortcuts": [
+     {
+      "name": "Inicio",
+      "short_name": "inicio",
+      "description": "Pagina Principal",
+      "url": "/"
+    },
     {
       "name": "Reproductor 2",
-      "url": "/1/",
+      "short_name": "rep2",
       "description": "Segundo reproductor",
-      "icons": [
-        {
-          "src": "https://djwilmer-pwa2.vercel.app/icon.png",
-          "sizes": "192x192"
-        }
+      "url": "/1/"
+    }
       ]
     }
   ],
