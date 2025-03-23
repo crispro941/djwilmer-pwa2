@@ -44,7 +44,7 @@
         {
           "src": "https://djwilmer-pwa2.vercel.app/icon.png",
           "sizes": "192x192"
-        },
+        }
         {
       "name": "Rep 2",
       "url": "/1/index.html",
