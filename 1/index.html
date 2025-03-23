@@ -3,128 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio Demo</title>
+    <title>CRISPRO941 - Radio Online</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <style>
-        .fade { opacity: 0; transition: opacity 0.5s ease-in-out; }
-        .show { opacity: 1; }
-        .loaded { opacity: 1 !important; }
+        /* 🔥 Fondo dinámico con desenfoque */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: center/cover no-repeat;
+            filter: blur(30px) brightness(0.3);
+            transition: background 0.5s ease-in-out;
+            z-index: -1;
+        }
+
+        /* 🔥 Menú lateral */
+        #menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px;
+            transition: right 0.3s ease-in-out;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #menu.show {
+            right: 0;
+        }
+
+        /* 🔊 Control de volumen */
+        #volumeControl {
+            appearance: none;
+            width: 100%;
+            height: 5px;
+            background: #1db954;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* 🔥 Botón de WhatsApp con animación */
+        #whatsappBtn {
+            transition: transform 0.2s ease-in-out;
+        }
+        #whatsappBtn:active {
+            transform: scale(0.9);
+        }
+        #whatsappBtn:hover {
+            box-shadow: 0 0 10px #25D366;
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white flex justify-center items-center min-h-screen relative">
-    <div id="bg-image" class="absolute inset-0 bg-cover bg-center blur-lg opacity-30"></div>
+<body class="bg-black flex justify-center items-center h-screen relative">
+    <!-- 🔵 Fondo dinámico -->
+    <div id="bg-image" class="background"></div>
 
-    <div class="relative bg-black bg-opacity-40 p-6 rounded-lg text-center w-96">
-        <h2 class="text-lg font-bold flex justify-center items-center gap-2">
-            <i class="fas fa-headphones"></i> <span id="radio-name">Radio Demo</span>
-        </h2>
+    <!-- 🔵 Botón para abrir el menú -->
+    <button id="menuBtn" class="absolute top-5 right-5 bg-gray-800 px-4 py-2 rounded-md text-white z-50">
+        <i class="fas fa-bars"></i> Menú
+    </button>
 
-        <div class="mt-4">
-            <img id="cover-img" src="https://djwilmer-pwa2.vercel.app/icon.png" class="rounded-lg w-48 h-48 mx-auto fade">
+    <!-- 🔵 Menú lateral -->
+    <div id="menu">
+        <div>
+            <!-- Cerrar menú -->
+            <button id="close-menu" class="absolute top-4 right-4 text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h2 class="text-xl font-bold mb-4 text-white">📻 DJ WILMER</h2>
+
+            <!-- 🔵 Redes Sociales -->
+            <h2 class="text-lg font-bold text-white mt-4">🌎 Síguenos</h2>
+            <div class="flex justify-around text-white text-3xl my-4">
+                <a href="https://web.facebook.com/DJCHOCHOBARWILMER" class="hover:text-gray-400"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/wilmerdelgadocieza/" class="hover:text-gray-400"><i class="fab fa-instagram"></i></a>
+                <a href="https://es.pinterest.com/wdelgadocieza/" class="hover:text-gray-400"><i class="fab fa-pinterest"></i></a>
+                <a href="https://www.youtube.com/DJCHOCHOBARWILMER" class="hover:text-gray-400"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <!-- 🔊 Control de volumen -->
+            <h2 class="text-lg font-bold text-white mt-4">🔊 Volumen</h2>
+            <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1" class="w-full mt-2">
+
             
+            <!-- 🔵 Formulario para pedir canciones -->
+            <h2 class="text-lg font-bold text-white mt-4">📩 Solicitar una Canción</h2>
+            <input id="nombre" type="text" placeholder="Tu nombre" class="w-full p-2 mt-2 bg-gray-800 text-white rounded">
+            <input id="cancion" type="text" placeholder="Nombre de la canción" class="w-full p-2 mt-2 bg-gray-800 text-white rounded">
+            <input id="artista" type="text" placeholder="Artista" class="w-full p-2 mt-2 bg-gray-800 text-white rounded">
+            <button id="whatsappBtn" class="w-full bg-green-500 text-white p-2 mt-4 rounded">
+                <i class="fab fa-whatsapp"></i> Enviar solicitud
+            </button>
         </div>
 
-        <span class="mt-2 px-2 py-1 bg-red-600 text-sm rounded-full inline-block">AL AIRE</span>
+        <!-- 🔵 Powered by -->
+        <div class="text-center text-gray-500 text-sm mt-6">
+            Diseñado Por: <strong class="text-white">CRISPRO941</strong>
+        </div>
+    </div>
 
-        <h3 id="song-title" class="text-xl font-semibold mt-3 fade show">Cargando...</h3>
-        <p id="artist-name" class="text-sm text-gray-400 fade show">Artista desconocido</p>
-        <p id="album-info" class="text-xs text-gray-500 fade show"></p>
+    <!-- 🔵 Contenedor del reproductor -->
+    <div class="w-full max-w-md text-center bg-black bg-opacity-50 rounded-lg shadow-lg p-6 backdrop-blur-lg relative">
+        <h1 class="text-white text-xl font-bold mb-4">DJ WILMER</h1>
 
-        <div class="flex justify-center items-center gap-6 mt-4">
-            <button id="playPauseBtn" class="w-12 h-12 bg-red-500 rounded-full flex justify-center items-center text-xl">
-                <i class="fas fa-play"></i>
-            </button>
-            <button id="shareBtn" class="w-12 h-12 bg-gray-700 rounded-full flex justify-center items-center text-xl">
-                <i class="fas fa-share"></i>
-            </button>
+        <!-- 🎵 Portada -->
+        <div id="album-cover" class="w-64 h-64 mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
+            <img id="cover-img" src="https://djwilmer-pwa2.vercel.app/icon.png" alt="Portada del álbum" class="w-full h-full object-cover">
+        </div>
+
+        <!-- 🎶 Información de la canción -->
+        <div class="mt-4">
+            <h2 id="song-title" class="text-white text-xl font-semibold mt-2">Dale Play</h2>
+            <h3 id="artist-name" class="text-gray-300 text-md">En Vivo</h3>
+        </div>
+
+        <!-- 🎛 Controles -->
+        <div class="mt-6 flex items-center justify-center space-x-6 text-white text-3xl">
+            <button id="playPauseBtn" class="hover:text-gray-400 transition"><i class="fas fa-play"></i></button>
         </div>
     </div>
 
     <script>
-        const NombreRadio = "DJ WILMER";
-        const urlstream = "https://stream-175.zeno.fm/wttrxavefwzuv";
-        const api_url = `https://api.f-97.com/universal?url=${urlstream}`;
-        const audio = new Audio(urlstream);
+        const audio = new Audio("https://stream-175.zeno.fm/wttrxavefwzuv");
+        const api_url = `https://api.f-97.com/universal?url=${audio.src}`;
         let isPlaying = false;
-        let controller = new AbortController();
-        let currentSong = "";
-
-        document.getElementById("radio-name").textContent = NombreRadio;
+        let history = [];
 
         document.getElementById("playPauseBtn").addEventListener("click", function() {
-            if (isPlaying) {
-                audio.pause();
-                this.innerHTML = '<i class="fas fa-play"></i>';
-            } else {
-                audio.play();
-                this.innerHTML = '<i class="fas fa-pause"></i>';
-            }
+            isPlaying ? audio.pause() : audio.play();
             isPlaying = !isPlaying;
+            this.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
         });
 
-        document.getElementById("shareBtn").addEventListener("click", function() {
-            const shareText = `Escuchando ${currentSong || 'esta radio'} en ${NombreRadio}: ${urlstream}`;
-            navigator.share ? navigator.share({ title: NombreRadio, text: shareText, url: urlstream }) : alert(shareText);
+        document.getElementById("volumeControl").addEventListener("input", function() {
+            audio.volume = this.value;
         });
 
         async function fetchSongInfo() {
-            try {
-                controller.abort();
-                controller = new AbortController();
+            const response = await fetch(api_url);
+            const data = await response.json();
 
-                const response = await fetch(api_url, { signal: controller.signal });
-                const data = await response.json();
-
-                const songTitle = data.songtitle || "Desconocido";
-                const artist = data.artist || data.song || "Artista desconocido";
-                const album = data.album ? `${data.album} (${data.year || 'Año desconocido'})` : "";
-                const artwork = data.artwork || "";
-
-                if (songTitle !== currentSong) {
-                    currentSong = songTitle;
-
-                    document.getElementById("song-title").classList.remove("show");
-                    document.getElementById("artist-name").classList.remove("show");
-                    document.getElementById("album-info").classList.remove("show");
-
-                    setTimeout(() => {
-                        document.getElementById("song-title").textContent = songTitle;
-                        document.getElementById("artist-name").textContent = artist;
-                        document.getElementById("album-info").textContent = album;
-
-                        document.getElementById("song-title").classList.add("show");
-                        document.getElementById("artist-name").classList.add("show");
-                        document.getElementById("album-info").classList.add("show");
-                    }, 500);
-                }
-
-                const coverImg = document.getElementById("cover-img");
-                const radioLogo = document.getElementById("radio-logo");
-
-                if (artwork) {
-                    const img = new Image();
-                    img.src = artwork;
-                    img.onload = () => {
-                        coverImg.src = artwork;
-                        coverImg.classList.add("loaded");
-                        radioLogo.classList.remove("loaded");
-                        document.getElementById("bg-image").style.backgroundImage = `url('${artwork}')`;
-                    };
-                } else {
-                    coverImg.classList.remove("loaded");
-                    radioLogo.classList.add("loaded");
-                    document.getElementById("bg-image").style.backgroundImage = "url('https://djwilmer-pwa2.vercel.app/icon.png')";
-                }
-            } catch (error) {
-                if (error.name !== 'AbortError') {
-                    console.error("Error obteniendo la canción:", error);
-                }
-            }
+            document.getElementById("song-title").textContent = data.songtitle || "Desconocido";
+            document.getElementById("artist-name").textContent = data.artist || "Artista desconocido";
+            document.getElementById("cover-img").src = data.artwork || "https://djwilmer-pwa2.vercel.app/icon.png";
         }
 
-        setInterval(fetchSongInfo, 10000);
+        document.getElementById("menuBtn").addEventListener("click", () => document.getElementById("menu").classList.add("show"));
+        document.getElementById("close-menu").addEventListener("click", () => document.getElementById("menu").classList.remove("show"));
+
+        setInterval(fetchSongInfo, 5000);
         fetchSongInfo();
+      // Botón de WhatsApp funcional
+        document.getElementById("whatsappBtn").addEventListener("click", function() {
+            let nombre = document.getElementById("nombre").value.trim();
+            let cancion = document.getElementById("cancion").value.trim();
+            let artista = document.getElementById("artista").value.trim();
+
+            if (!nombre || !cancion || !artista) {
+                alert("⚠️ Por favor, completa todos los campos.");
+                return;
+            }
+
+            let numeroWhatsApp = "56932055661"; // Reemplázalo con tu número real
+            let mensaje = `🎶 Hola, soy ${nombre}. Quiero pedir la canción "${cancion}" de ${artista}.`;
+            let url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+            window.open(url, "_blank");
+        });
     </script>
 </body>
 </html>
