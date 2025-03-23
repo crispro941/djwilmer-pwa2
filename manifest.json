@@ -37,9 +37,9 @@
   "scope": "/",
   "shortcuts": [
     {
-      "name": "DJ WILMER",
+      "name": "Reproductor 2",
       "url": "/1/",
-      "description": "DJ WILMER",
+      "description": "Segundo reproductor",
       "icons": [
         {
           "src": "https://djwilmer-pwa2.vercel.app/icon.png",
