@@ -3,118 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DJ WILMER</title>
+    <title>Radio Demo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        /* Fondo con desenfoque */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: center/cover no-repeat;
-            filter: blur(30px) brightness(0.4);
-            transition: background 0.5s ease-in-out;
-            z-index: -1;
-        }
-
-        /* Animación de imagen */
-        .fade-in {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .fade-in.loaded {
-            opacity: 1;
-        }
-
-        /* Animación de texto */
-        .text-fade {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        }
-        .text-fade.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade { opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .show { opacity: 1; }
+        .loaded { opacity: 1 !important; }
     </style>
 </head>
-<body class="bg-black flex justify-center items-center h-screen relative">
-    <!-- Fondo dinámico -->
-    <div id="bg-image" class="background"></div>
+<body class="bg-gray-900 text-white flex justify-center items-center min-h-screen relative">
+    <div id="bg-image" class="absolute inset-0 bg-cover bg-center blur-lg opacity-30"></div>
 
-    <div class="w-full max-w-md text-center bg-black bg-opacity-50 rounded-lg shadow-lg p-6 backdrop-blur-lg relative">
-        <!-- Nombre de la radio -->
-        <h1 class="text-white text-xl font-bold mb-4">DJ WILMER</h1>
+    <div class="relative bg-black bg-opacity-40 p-6 rounded-lg text-center w-96">
+        <h2 class="text-lg font-bold flex justify-center items-center gap-2">
+            <i class="fas fa-headphones"></i> <span id="radio-name">Radio Demo</span>
+        </h2>
 
-        <!-- Portada o logo de la radio -->
-        <div id="album-cover" class="w-64 h-64 mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
-            <img id="cover-img" src="" alt="Portada del álbum" class="w-full h-full object-cover fade-in">
-            <img id="radio-logo" src="" alt="Logo de la Radio" class="w-full h-full object-cover absolute top-0 left-0 fade-in">
+        <div class="mt-4">
+            <img id="cover-img" src="https://placehold.co/256?text=Radio+Demo" class="rounded-lg w-48 h-48 mx-auto fade">
+            
         </div>
 
-        <!-- Información de la canción -->
-        <div id="song-info" class="mt-4 hidden">
-            <span class="text-xs uppercase bg-red-500 text-white px-2 py-1 rounded">🔴 AL AIRE</span>
-            <h2 id="song-title" class="text-white text-xl font-semibold mt-2 text-fade">Cargando...</h2>
-            <h3 id="artist-name" class="text-gray-300 text-md text-fade">---</h3>
-            <p id="album-info" class="text-gray-400 text-sm text-fade"></p>
-        </div>
+        <span class="mt-2 px-2 py-1 bg-red-600 text-sm rounded-full inline-block">AL AIRE</span>
 
-        <!-- Controles -->
-        <div class="mt-6 flex items-center justify-center space-x-6 text-white text-3xl">
-            <button id="playPauseBtn" class="hover:text-gray-400 transition"><i class="fas fa-play"></i></button>
-            <button id="shareBtn" class="hover:text-gray-400 transition"><i class="fas fa-share-alt"></i></button>
+        <h3 id="song-title" class="text-xl font-semibold mt-3 fade show">Cargando...</h3>
+        <p id="artist-name" class="text-sm text-gray-400 fade show">Artista desconocido</p>
+        <p id="album-info" class="text-xs text-gray-500 fade show"></p>
+
+        <div class="flex justify-center items-center gap-6 mt-4">
+            <button id="playPauseBtn" class="w-12 h-12 bg-red-500 rounded-full flex justify-center items-center text-xl">
+                <i class="fas fa-play"></i>
+            </button>
+            <button id="shareBtn" class="w-12 h-12 bg-gray-700 rounded-full flex justify-center items-center text-xl">
+                <i class="fas fa-share"></i>
+            </button>
         </div>
     </div>
 
     <script>
-       // Función para compartir el enlace de la radio
-        document.getElementById("shareBtn").addEventListener("click", async function() {
-            const shareMessage = `🎶 Escucha ${NombreRadio} en: ${shareUrl}`;
-
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: NombreRadio,
-                        text: shareMessage,
-                        url: shareUrl
-                    });
-                } catch (error) {
-                    console.error("Error al compartir:", error);
-                }
-            } else {
-                navigator.clipboard.writeText(shareMessage).then(() => {
-                    const toast = document.getElementById("toast");
-                    toast.textContent = "Enlace copiado al portapapeles";
-                    toast.classList.add("show");
-                    setTimeout(() => {
-                        toast.classList.remove("show");
-                    }, 2000);
-                }).catch(err => console.error("Error al copiar:", err));
-            }
-        });
-      
-      
-        const useAPI = false; // Cambia a false si no quieres usar la API
         const NombreRadio = "DJ WILMER";
-        const LogoRadio = "https://djwilmer-pwa2.vercel.app/icon.png";
         const urlstream = "https://stream-175.zeno.fm/wttrxavefwzuv";
-      const shareUrl = "https://djwilmer-pwa2.vercel.app/1/"; // URL a donde quieres mandar a los usuarios
         const api_url = `https://api.f-97.com/universal?url=${urlstream}`;
         const audio = new Audio(urlstream);
         let isPlaying = false;
         let controller = new AbortController();
         let currentSong = "";
 
-        document.getElementById("radio-logo").src = LogoRadio;
-        document.getElementById("cover-img").src = LogoRadio;
-        document.getElementById("bg-image").style.backgroundImage = `url('${LogoRadio}')`;
-
-        document.getElementById("radio-logo").classList.add("loaded");
-        document.getElementById("cover-img").classList.add("loaded");
+        document.getElementById("radio-name").textContent = NombreRadio;
 
         document.getElementById("playPauseBtn").addEventListener("click", function() {
             if (isPlaying) {
@@ -127,9 +63,12 @@
             isPlaying = !isPlaying;
         });
 
-        async function fetchSongInfo() {
-            if (!useAPI) return;
+        document.getElementById("shareBtn").addEventListener("click", function() {
+            const shareText = `Escuchando ${currentSong || 'esta radio'} en ${NombreRadio}: ${urlstream}`;
+            navigator.share ? navigator.share({ title: NombreRadio, text: shareText, url: urlstream }) : alert(shareText);
+        });
 
+        async function fetchSongInfo() {
             try {
                 controller.abort();
                 controller = new AbortController();
@@ -145,7 +84,6 @@
                 if (songTitle !== currentSong) {
                     currentSong = songTitle;
 
-                    // Ocultar texto antes de cambiarlo
                     document.getElementById("song-title").classList.remove("show");
                     document.getElementById("artist-name").classList.remove("show");
                     document.getElementById("album-info").classList.remove("show");
@@ -161,13 +99,10 @@
                     }, 500);
                 }
 
-                // Alternar entre imagen de portada y logo de radio
                 const coverImg = document.getElementById("cover-img");
                 const radioLogo = document.getElementById("radio-logo");
 
                 if (artwork) {
-                    document.getElementById("song-info").classList.remove("hidden");
-
                     const img = new Image();
                     img.src = artwork;
                     img.onload = () => {
@@ -179,7 +114,7 @@
                 } else {
                     coverImg.classList.remove("loaded");
                     radioLogo.classList.add("loaded");
-                    document.getElementById("bg-image").style.backgroundImage = `url('${LogoRadio}')`;
+                    document.getElementById("bg-image").style.backgroundImage = "url('https://placehold.co/256?text=Radio+Demo')";
                 }
             } catch (error) {
                 if (error.name !== 'AbortError') {
@@ -188,11 +123,8 @@
             }
         }
 
-        if (useAPI) {
-            document.getElementById("song-info").classList.remove("hidden");
-            setInterval(fetchSongInfo, 5000);
-            fetchSongInfo();
-        }
+        setInterval(fetchSongInfo, 5000);
+        fetchSongInfo();
     </script>
 </body>
 </html>
