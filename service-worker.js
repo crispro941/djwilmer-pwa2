@@ -1,4 +1,4 @@
-const CACHE_NAME = "dj-wilmer-v2";
+const CACHE_NAME = "dj-wilmer-v1";
 const urlsToCache = [
     "/",
     "/index.html",
