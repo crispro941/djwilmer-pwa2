@@ -1,8 +1,9 @@
-const CACHE_NAME = "dj-wilmer-v1";
+const CACHE_NAME = "dj-wilmer-v2";
 const urlsToCache = [
     "/",
     "/index.html",
     "/manifest.json",
+    "/1/",
     "/icon.png"
 ];
 
